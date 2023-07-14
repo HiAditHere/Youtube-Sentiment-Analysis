@@ -1,3 +1,4 @@
 .ipynb_checkpoints
 new_file.csv
 downloaded_file.csv
+__pycache__

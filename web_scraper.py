@@ -8,6 +8,8 @@ import boto3
 def crawler(link):
     cwd = os.getcwd()
 
+    youtube_link = "https://www.youtube.com/watch?v="+link
+
     PATH = cwd + "\ChromeDriver\chromedriver.exe"
 
     # driver.get does not work all the time. So try except implementation
@@ -15,7 +17,7 @@ def crawler(link):
     while(True):
         try:
             driver = webdriver.Chrome(service=ChromeService(PATH))
-            driver.get(link)
+            driver.get(youtube_link)
             break
         except:
             driver.quit()
@@ -97,18 +99,13 @@ def crawler(link):
                 df.loc[len(df)] = content
         except:
             continue
-            
-    # Fetchning the title of the video
-
-    title_path = "/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[1]/h1/yt-formatted-string"
-    title = driver.find_element("xpath", title_path).text
 
     print(df)
 
     # close the chrome browser convert dataframe to csvMod
 
     driver.close()
-    file = df.to_csv("new_file.csv")
+    df.to_csv("new_file.csv")
 
     s3 = boto3.resource("s3")
 
@@ -123,7 +120,7 @@ def crawler(link):
     s3_client.upload_file(
         Filename = "new_file.csv",
         Bucket = bucket_name,
-        Key = title + ".csv"
+        Key = link + ".csv"
     )
 
     return False
