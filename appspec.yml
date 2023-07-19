@@ -1,0 +1,14 @@
+version: 1.0
+os: linux
+
+files:
+  - source: /
+    destination: /var/www/html/
+
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      runas: root
