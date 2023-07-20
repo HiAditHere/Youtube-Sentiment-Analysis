@@ -4,4 +4,4 @@
 # source /path/to/your/virtualenv/bin/activate
 
 # Install the required Python packages
-pip install -r requirements.txt
+pip install -r /requirements.txt
