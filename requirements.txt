@@ -10,22 +10,22 @@ blinker==1.6.2
 boto3==1.26.165
 botocore==1.29.165
 bpemb==0.3.4
-certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
+certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==3.1.0
 click==8.1.4
 cloudpickle==2.2.1
-colorama @ file:///C:/b/abs_a9ozq0l032/croot/colorama_1672387194846/work
+colorama==0.4.6
 comm==0.1.2
 conllu==4.5.3
 contourpy==1.1.0
 cycler==0.11.0
 datasets==2.13.1
 debugpy==1.6.6
-decorator @ file:///opt/conda/conda-bld/decorator_1643638310831/work
+decorator==5.1.1
 Deprecated==1.2.14
 dill==0.3.6
-entrypoints @ file:///C:/ci/entrypoints_1649926676279/work
+entrypoints==0.4
 exceptiongroup==1.1.2
 executing==1.2.0
 filelock==3.12.2
@@ -68,12 +68,13 @@ networkx==3.1
 nltk==3.8.1
 numpy==1.25.0
 outcome==1.2.0
-packaging @ file:///C:/b/abs_cfsup8ur87/croot/packaging_1671697442297/work
+packaging==22.0
 pandas==2.0.3
 parso==0.8.3
 pickleshare==0.7.5
 Pillow==10.0.0
-platformdirs @ file:///C:/b/abs_73cc5cz_1u/croots/recipe/platformdirs_1662711386458/work
+pip==22.3.1
+platformdirs==2.5.2
 pptree==3.1
 prompt-toolkit==3.0.36
 protobuf==3.20.3
@@ -85,7 +86,7 @@ pycparser==2.21
 Pygments==2.14.0
 pyparsing==3.0.9
 PySocks==1.7.1
-python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+python-dateutil==2.8.2
 python-dotenv==1.0.0
 pytorch_revgrad==0.2.0
 pytz==2023.3
@@ -101,7 +102,8 @@ scipy==1.11.1
 segtok==1.5.11
 selenium==4.10.0
 sentencepiece==0.1.99
-six @ file:///tmp/build/80754af9/six_1644875935023/work
+setuptools==65.6.3
+six==1.16.0
 smart-open==6.3.0
 sniffio==1.3.0
 sortedcontainers==2.4.0
@@ -123,9 +125,10 @@ trio-websocket==0.10.3
 typing_extensions==4.7.1
 tzdata==2023.3
 urllib3==1.26.16
-wcwidth @ file:///Users/ktietz/demo/mc3/conda-bld/wcwidth_1629357192024/work
+wcwidth==0.2.5
 webdriver-manager==3.8.6
 Werkzeug==2.3.6
+wheel==0.37.1
 Wikipedia-API==0.6.0
 wincertstore==0.2
 wrapt==1.15.0
