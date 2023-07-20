@@ -3,7 +3,9 @@ os: linux
 
 files:
   - source: /
-    destination: /deployment
+    destination: /var/www/html/myapp
+
+file_exists_behaviour: OVERWRITE
 
 hooks:
   BeforeInstall:

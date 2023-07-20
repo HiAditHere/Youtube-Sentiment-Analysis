@@ -2,7 +2,7 @@
 
 # Activate the virtual environment (if applicable)
 # source /path/to/your/virtualenv/bin/activate
-cd /deployment/
+cd /var/www/html/myapp
 
 # Start the Flask server
 python app.py
