@@ -3,7 +3,7 @@ os: linux
 
 files:
   - source: /
-    destination: /var/www/html/myapp
+    destination: /var/www/html/
 
 file_exists_behaviour: OVERWRITE
 
