@@ -5,9 +5,5 @@ set -e
 # source /path/to/your/virtualenv/bin/activate
 ls
 
-cd /
-
-ls
-
 # Install the required Python packages
 pip install -r requirements.txt

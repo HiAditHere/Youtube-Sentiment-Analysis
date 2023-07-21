@@ -7,6 +7,12 @@ files:
 
 file_exists_behaviour: OVERWRITE
 
+permissions:
+  - object: /var/www/html/
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-user
+
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies.sh
