@@ -5,5 +5,9 @@ set -e
 # source /path/to/your/virtualenv/bin/activate
 ls
 
+cd deployment-root
+
+ls
+
 # Install the required Python packages
 pip install -r requirements.txt
