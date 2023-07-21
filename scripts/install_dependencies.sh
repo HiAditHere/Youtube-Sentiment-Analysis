@@ -5,7 +5,7 @@ set -e
 # source /path/to/your/virtualenv/bin/activate
 ls
 
-cd deployment-root
+cd ../
 
 ls
 
