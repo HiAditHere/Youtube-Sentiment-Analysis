@@ -2,3 +2,5 @@
 new_file.csv
 downloaded_file.csv
 __pycache__
+.vscode
+aws-access-key/
