@@ -65,4 +65,6 @@ jobs:
         REMOTE_USER: ${{ secrets.SSH_USERNAME }}
         REMOTE_HOST: 18.206.161.186
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        command: python app.py
+        command: |
+          scp -i ~/.ssh/id_rsa -r $GITHUB_WORKSPACE/. ubuntu@18.206.161.186:/.
+          python app.py
