@@ -62,7 +62,7 @@ jobs:
     - name: Deploy on EC2
       uses: easingthemes/ssh-deploy@v2
       with:
-        command: python app.py
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         REMOTE_USER: ${{ secrets.SSH_USERNAME }}
         REMOTE_HOST: 18.206.161.186
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        command: python app.py
