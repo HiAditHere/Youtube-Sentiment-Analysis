@@ -4,3 +4,4 @@ downloaded_file.csv
 __pycache__
 .vscode
 aws-access-key/
+test_requirements.txt
