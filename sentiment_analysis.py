@@ -56,8 +56,16 @@ def sentiment_analysis(df):
     else:
         overall_sentiment = "Neutral"
 
-    avg_negative_sentiment_confidence = dic["neg"]["conf"]/dic["neg"]["count"]
-    avg_positive_sentiment_confidence = dic["pos"]["conf"]/dic["pos"]["count"]
+    if dic["neg"]["count"] == 0:
+        avg_negative_sentiment_confidence = 0
+    else:
+        avg_negative_sentiment_confidence = dic["neg"]["conf"]/dic["neg"]["count"]
+
+    if dic["pos"]["count"] == 0:
+        avg_positive_sentiment_confidence = 0
+    else:
+        avg_positive_sentiment_confidence = dic["pos"]["conf"]/dic["pos"]["count"]
+ 
 
     return {
         "overall_sentiment": overall_sentiment,
