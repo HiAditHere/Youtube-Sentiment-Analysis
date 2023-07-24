@@ -81,7 +81,6 @@ def crawler(link):
             see_replies.click()
         except:
             continue
-
             
     # This is not the same as previous comments
     comments = comments_section.find_elements("xpath",'.//ytd-comment-thread-renderer')
@@ -116,7 +115,11 @@ def crawler(link):
 
     # Uploading the comments in the csv file to our bucket
 
-    s3_client = boto3.client("s3")
+    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    aws_region = os.environ.get('AWS_DEFAULT_REGION')
+
+    s3_client = boto3.client("s3", aws_secret_access_key = aws_secret_access_key, aws_access_key_id = aws_access_key_id, aws_region = aws_region)
     s3_client.upload_file(
         Filename = "new_file.csv",
         Bucket = bucket_name,
