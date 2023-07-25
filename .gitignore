@@ -5,5 +5,3 @@ __pycache__
 .vscode
 aws-access-key/
 test_requirements.txt
-.dockerignore
-Dockerfile

@@ -1,0 +1,17 @@
+.ipynb_checkpoints
+new_file.csv
+downloaded_file.csv
+__pycache__
+.vscode
+aws-access-key/
+test_requirements.txt
+Web_Scraping.ipynb
+Sentiment_analysis
+scripts/
+appspec.yml
+Data_cleaning_and_sentiment_analysis.ipynb
+test_requirements.txt
+.gitignore
+readMe.md
+Sentiment_analysis.ipynb
+wsgi.py

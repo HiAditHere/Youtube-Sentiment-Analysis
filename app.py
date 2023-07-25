@@ -15,12 +15,12 @@ def scrape_and_analyse(link):
     aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
     aws_region = os.environ.get('AWS_DEFAULT_REGION')
 
-    s3 = boto3.resource("s3", aws_secret_access_key = aws_secret_access_key, aws_access_key_id = aws_access_key_id, aws_region = aws_region)
+    s3 = boto3.resource("s3", aws_secret_access_key = aws_secret_access_key, aws_access_key_id = aws_access_key_id, region_name = aws_region)
     
     for bucket in s3.buckets.all():
         bucket_name = bucket.name
 
-    s3_client = boto3.client("s3", aws_secret_access_key = aws_secret_access_key, aws_access_key_id = aws_access_key_id, aws_region = aws_region)
+    s3_client = boto3.client("s3", aws_secret_access_key = aws_secret_access_key, aws_access_key_id = aws_access_key_id, region_name = aws_region)
 
     try:
         s3_client.download_file(
