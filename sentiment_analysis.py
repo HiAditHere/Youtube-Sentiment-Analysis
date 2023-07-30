@@ -7,7 +7,7 @@ def sentiment_analysis(df):
     df.drop(columns = ["Unnamed: 0"], inplace = True)
 
     def sentiment_analyzer(sentence):
-        sent = Sentence(sentence)
+        sent = Sentence(str(sentence))
         flair_sentiment.predict(sent)
         value = sent.labels[0].to_dict()["value"]
         confidence = sent.labels[0].to_dict()["confidence"]

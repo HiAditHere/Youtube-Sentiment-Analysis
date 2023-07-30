@@ -10,17 +10,45 @@ def crawler(link):
 
     youtube_link = "https://www.youtube.com/watch?v="+link
 
-    PATH = cwd + "\ChromeDriver\chromedriver.exe"
+    #PATH = cwd + "\ChromeDriver\chromedriver.exe"
+
+    '''PATH = "/usr/local/bin/chromedriver"
 
     # driver.get does not work all the time. So try except implementation
 
-    while(True):
+    driver = None
+    new_driver = None
+
+    while driver is None:
         try:
-            driver = webdriver.Chrome(service=ChromeService(PATH))
-            driver.get(youtube_link)
-            break
+            new_driver = webdriver.Chrome(service=ChromeService(PATH))
+            new_driver.get(youtube_link)
+            driver = new_driver
         except:
-            driver.quit()
+            if new_driver is not None:
+                new_driver.quit()
+            
+    sleep(5)'''
+
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')  # Run Chrome in headless mode (without GUI)
+    options.add_argument('--no-sandbox') 
+
+    #PATH = "/usr/local/bin/chromedriver"
+
+    # driver.get does not work all the time. So try except implementation
+
+    driver = None
+    new_driver = None
+
+    while driver is None:
+        try:
+            new_driver = webdriver.Chrome(options = options)
+            new_driver.get(youtube_link)
+            driver = new_driver
+        except:
+            if new_driver is not None:
+                new_driver.quit()
             
     sleep(5)
 
@@ -119,7 +147,7 @@ def crawler(link):
     aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
     aws_region = os.environ.get('AWS_DEFAULT_REGION')
 
-    s3_client = boto3.client("s3", aws_secret_access_key = aws_secret_access_key, aws_access_key_id = aws_access_key_id, aws_region = aws_region)
+    s3_client = boto3.client("s3", aws_secret_access_key = aws_secret_access_key, aws_access_key_id = aws_access_key_id, region_name = aws_region)
     s3_client.upload_file(
         Filename = "new_file.csv",
         Bucket = bucket_name,
