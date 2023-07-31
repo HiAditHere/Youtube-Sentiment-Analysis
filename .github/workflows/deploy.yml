@@ -54,8 +54,8 @@ jobs:
 
     - name: Copy Dockerfile and bash script into /app directory. Give permission for bash script to run
       run: |
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" Dockerfile scripts/bash.sh ubuntu@18.206.161.186:/app
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "chmod +x /app/bash.sh"
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" . ubuntu@18.206.161.186:/app
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "chmod +x /app/scripts/bash.sh"
 
     - name: Stop and remove any existing containers, build and run new container
       run: |
