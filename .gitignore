@@ -6,4 +6,3 @@ __pycache__
 aws-access-key/
 test_requirements.txt
 ChromeDriver/
-scripts/
