@@ -20,6 +20,6 @@ RUN LATEST_CHROMEDRIVER=$(wget -q -O - https://chromedriver.storage.googleapis.c
 ENV CHROME_DRIVER /usr/local/bin/chromedriver
 ENV CHROME_BINARY /usr/bin/google-chrome-stable
 
-RUN pip install --no-cache-dir --no-parallel -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 3000
 CMD python ./app.py
