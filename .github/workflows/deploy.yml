@@ -39,6 +39,18 @@ jobs:
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo chown ubuntu /app"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo chmod u+rwx /app"
 
+    - name: Install Docker on the ec2 instance
+      run: |
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt update"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt install -y apt-transport-https ca-certificates curl software-properties-common"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt update"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt install -y docker-ce"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo systemctl start docker"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo systemctl enable docker"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo usermod -aG docker ubuntu" # Assuming the default user is ubuntu
+
     - name: Copy Dockerfile into /app directory
       run: |
         rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" Dockerfile ubuntu@18.206.161.186:/app
