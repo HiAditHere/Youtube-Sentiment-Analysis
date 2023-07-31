@@ -59,6 +59,6 @@ jobs:
 
     - name: Stop and remove any existing containers, build and run new container
       run: |
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 'cd /app && ./bash.sh'
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 'cd /app/scripts && ./bash.sh'
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "cd /app && docker build -t hiadithere/youtube-sentiment-analysis:latest . --no-cache"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 'cd /app && docker run -d -p 3000:3000 -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFAULT_REGION="${{ env.AWS_REGION }}" hiadithere/youtube-sentiment-analysis:latest'
