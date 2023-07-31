@@ -52,9 +52,10 @@ jobs:
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo systemctl enable docker"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo usermod -aG docker ubuntu" # Assuming the default user is ubuntu
 
-    - name: Copy Dockerfile into /app directory
+    - name: Copy Dockerfile and bash script into /app directory. Give permission for bash script to run
       run: |
         rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" Dockerfile scripts/bash.sh ubuntu@18.206.161.186:/app
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "chmod +x /app/bash.sh"
 
     - name: Stop and remove any existing containers, build and run new container
       run: |
