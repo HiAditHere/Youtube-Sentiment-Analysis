@@ -43,7 +43,7 @@ jobs:
       run: |
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt update"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt install -y apt-transport-https ca-certificates curl software-properties-common"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor --batch -o /usr/share/keyrings/docker-archive-keyring.gpg"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt update"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt install -y docker-ce"
