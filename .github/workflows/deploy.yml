@@ -35,30 +35,30 @@ jobs:
 
     - name: Create /app directory on ec2 and set permissions
       run: |
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo mkdir -p /app"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo chown ubuntu /app"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo chmod u+rwx /app"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo mkdir -p /app"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo chown ubuntu /app"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo chmod u+rwx /app"
 
     - name: Install Docker on the ec2 instance
       run: |
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt update"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt install -y apt-transport-https ca-certificates curl software-properties-common"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo rm -f /usr/share/keyrings/docker-archive-keyring.gpg"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor --batch -o /usr/share/keyrings/docker-archive-keyring.gpg"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt update"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo apt install -y docker-ce"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo systemctl start docker"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo systemctl enable docker"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo usermod -aG docker ubuntu" # Assuming the default user is ubuntu
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo apt update"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo apt install -y apt-transport-https ca-certificates curl software-properties-common"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo rm -f /usr/share/keyrings/docker-archive-keyring.gpg"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor --batch -o /usr/share/keyrings/docker-archive-keyring.gpg"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable' | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo apt update"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo apt install -y docker-ce"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo systemctl start docker"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo systemctl enable docker"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "sudo usermod -aG docker ubuntu" # Assuming the default user is ubuntu
 
     - name: Copy Dockerfile and bash script into /app directory. Give permission for bash script to run
       run: |
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" . ubuntu@18.206.161.186:/app
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "chmod +x /app/scripts/bash.sh"
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" . ubuntu@${{ secrets.IP_ADDRESS }}:/app
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "chmod +x /app/scripts/bash.sh"
 
     - name: Stop and remove any existing containers, build and run new container
       run: |
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 'cd /app/scripts && ./bash.sh'
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "cd /app && docker build -t hiadithere/youtube-sentiment-analysis:latest . --no-cache"
-        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 'cd /app && docker run -d -p 3000:3000 -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFAULT_REGION="${{ env.AWS_REGION }}" hiadithere/youtube-sentiment-analysis:latest'
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} 'cd /app/scripts && ./bash.sh'
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} "cd /app && docker build -t hiadithere/youtube-sentiment-analysis:latest . --no-cache"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@${{ secrets.IP_ADDRESS }} 'cd /app && docker run -d -p 3000:3000 -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFAULT_REGION="${{ env.AWS_REGION }}" hiadithere/youtube-sentiment-analysis:latest'
