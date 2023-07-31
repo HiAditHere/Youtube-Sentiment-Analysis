@@ -33,11 +33,18 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
-    - name: SSH onto EC2, stop and remove any existing containers, build and run new container
+    - name: Create /app directory on ec2 and set permissions
       run: |
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo mkdir -p /app"
+        ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo chown ubuntu /app"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "sudo chmod u+rwx /app"
+
+    - name: Copy Dockerfile into /app directory
+      run: |
         rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude=".git" Dockerfile ubuntu@18.206.161.186:/app
+
+    - name: Stop and remove any existing containers, build and run new container
+      run: |
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "docker stop $(docker ps -a -q)"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "docker rm -f $(docker ps -a -q)"
         ssh -o "StrictHostKeyChecking=no" ubuntu@18.206.161.186 "cd /app && docker build -t hiadithere/youtube-sentiment-analysis:latest . --no-cache"
