@@ -56,8 +56,11 @@ While returning the json response, I have made the following assumptions
 
 I still have some testing to do in this part of the application because as of now when I have tested the application, then I did not get any neutral comments at all. It could be a conincidence or flaw in the logic. I am working on this as of now.
 
+### Docker Image
+
+I have pushed an image of the working application to docker hub. The link is as follows
+```https://hub.docker.com/r/hiadithere/youtube-sentiment-analysis```
+
 ### Conclusion
 
-I hope you guys like this. I was wishing to make this public after I finished the whole application. But as I troubleshoot deployment issues I thought anyone in public could have a look at the code.
-
-I have a **Docker Image** of this application running succefully which I plan to make public soon.
+I hope you guys like this. I was wishing to make this public after I finished the whole application. But as I troubleshoot deployment issues I thought anyone in public could have a look at the code.s
