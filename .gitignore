@@ -5,3 +5,4 @@ __pycache__
 .vscode
 aws-access-key/
 test_requirements.txt
+.github/workflows/test.yml
