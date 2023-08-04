@@ -37,7 +37,7 @@ jobs:
       run: docker build -t hiadithere/youtube-sentiment-analysis:latest . --no-cache
 
     - name: Deploy on EC2
-      uses: applleboy/ssh-action@master
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.IP_ADDRESS }}
         username: ${{ secrets.SSH_USERNAME }}
