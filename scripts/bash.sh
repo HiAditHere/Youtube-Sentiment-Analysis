@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Replace 'your-ec2-public-ip' with the actual public IP address of your EC2 instance
-EC2_PUBLIC_IP='18.206.161.186'
+EC2_PUBLIC_IP= '${{ secrets.IP_ADDRESS }}'
 
 # SSH command to check if there are any containers running
 containers_running=$(ssh -o "StrictHostKeyChecking=no" ubuntu@$EC2_PUBLIC_IP 'docker ps -q')
