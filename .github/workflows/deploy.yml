@@ -19,9 +19,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-
-    - name: Build Docker Image
-      run: docker build -t hiadithere/youtube-sentiment-analysis:latest . --no-cache
       
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -36,18 +33,6 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
-    - name: Export Docker Image as Tarball
-      run: docker save -o youtube-sentiment-analysis.tar hiadithere/youtube-sentiment-analysis:latest
-  
-    - name: Copy Docker Image Tarball to EC2
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.IP_ADDRESS }}
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        source: youtube-sentiment-analysis.tar
-        target: /tmp/youtube-sentiment-analysis.tar
-
     - name: Deploy on EC2
       uses: appleboy/ssh-action@master
       with:
@@ -55,10 +40,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          EC2_PUBLIC_IP= ${{ secrets.IP_ADDRESS }}
-
-          # Load the Docker image from the tarball
-          docker load -i /tmp/youtube-sentiment-analysis.tar
+          EC2_PUBLIC_IP=${{ secrets.IP_ADDRESS }}
 
           # SSH command to check if there are any containers running
           containers_running=$(ssh -o "StrictHostKeyChecking=no" ubuntu@$EC2_PUBLIC_IP 'docker ps -q')
@@ -69,5 +51,8 @@ jobs:
           else
             echo "No running containers found on the remote EC2 instance."
           fi
+
+          # Pull docker image
+          docker pull hiadithere/youtube-sentiment-analysis:0.0.7.RELEASE
           
-          docker run -d -p 3000:3000 -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFAULT_REGION="${{ env.AWS_REGION }}" hiadithere/youtube-sentiment-analysis:latest
+          docker run -d -p 3000:3000 -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFAULT_REGION="${{ env.AWS_REGION }}" hiadithere/youtube-sentiment-analysis:0.0.7.RELEASE
