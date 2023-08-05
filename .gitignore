@@ -6,3 +6,4 @@ __pycache__
 aws-access-key/
 test_requirements.txt
 .github/workflows/test.yml
+.github/workflows/functioning.yml
