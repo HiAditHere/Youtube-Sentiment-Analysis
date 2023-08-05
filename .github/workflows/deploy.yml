@@ -20,12 +20,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Set up Python and Docker
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.10
-
     - name: Install Docker
       run: |
         sudo apt-get update
@@ -60,10 +54,34 @@ jobs:
       run: |
         ssh -o "StrictHostKeyChecking=no" ${{ secrets.SSH_USERNAME }}@${{ secrets.IP_ADDRESS }} exit
 
+    - name: Check if there are any running containers
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.IP_ADDRESS }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          EC2_PUBLIC_IP=${{ secrets.IP_ADDRESS }}
+
+          # SSH command to check if there are any containers running
+          containers_running=$(ssh -o "StrictHostKeyChecking=no" ubuntu@$EC2_PUBLIC_IP 'docker ps -q')
+          
+          if [ -n "$containers_running" ]; then
+            # If there are running containers, stop and remove them
+            ssh -o "StrictHostKeyChecking=no" ubuntu@$EC2_PUBLIC_IP 'docker stop $(docker ps -q) && docker rm $(docker ps -aq)'
+          else
+            echo "No running containers found on the remote EC2 instance."
+          fi
+
     # Pull the latest Docker image
     - name: Pull Docker image
       run: |
         ssh -o "StrictHostKeyChecking=no" ${{ secrets.SSH_USERNAME }}@${{ secrets.IP_ADDRESS }} 'docker pull hiadithere/youtube-sentiment-analysis:0.0.7.RELEASE'
+
+    # Run the docker image
+    - name: Run Docker image
+      run: |
+        ssh -o "StrictHostKeyChecking=no" ${{ secrets.SSH_USERNAME }}@${{ secrets.IP_ADDRESS }} 'docker run -d -p 3000:3000 -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFAULT_REGION="${{ env.AWS_REGION }}" hiadithere/youtube-sentiment-analysis:0.0.7.RELEASE'
 
     # Verify if the Docker container is running
     - name: Check Docker container status
