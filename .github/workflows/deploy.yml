@@ -20,13 +20,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
     - name: Copy SSH private key to EC2
       run: |
         mkdir -p ~/.ssh
@@ -43,7 +36,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          EC2_PUBLIC_IP= '${{ secrets.IP_ADDRESS }}'
+          EC2_PUBLIC_IP= ${{ secrets.IP_ADDRESS }}
 
           # SSH command to check if there are any containers running
           containers_running=$(ssh -o "StrictHostKeyChecking=no" ubuntu@$EC2_PUBLIC_IP 'docker ps -q')
