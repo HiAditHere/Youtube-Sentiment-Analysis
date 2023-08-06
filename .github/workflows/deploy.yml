@@ -33,6 +33,19 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
+    # Add the following step to run the bash script
+    - name: Run the SSH Key Copy Script
+      run: |
+        # Replace YOUR_PUBLIC_KEY_PATH, YOUR_PRIVATE_KEY_PATH, YOUR_USERNAME, and YOUR_EC2_INSTANCE_IP with actual values
+        PUBLIC_KEY_PATH="~/.ssh/id_rsa.pub"
+        PRIVATE_KEY_PATH="~/.ssh/id_rsa"
+        
+        # Read the contents of the public key file
+        PUBLIC_KEY_CONTENT=$(cat "$PUBLIC_KEY_PATH")
+        
+        # Use ssh to copy the public key to the EC2 instance's authorized_keys file
+        ssh -i "$PRIVATE_KEY_PATH" -o "StrictHostKeyChecking=no"  ${{ secrets.SSH_USERNAME }}@${{ secrets.IP_ADDRESS }} "echo '$PUBLIC_KEY_CONTENT' >> ~/.ssh/authorized_keys"
+
     # Verify SSH connectivity to the EC2 instance
     - name: Verify SSH connectivity
       run: |
