@@ -1,8 +1,6 @@
 # Youtube Sentiment Analysis
 
-This application scrapes comments of social media feeds, stores comments into s3 bucket, performs sentiment analysis and returns overall semtiment associated with a social media post. This application is essentially an API that will be deployed to an EC2 instance.
-
-It is currently under progress. Currently I am attempting to build and run a docker inside the ec2 instance. I am getting some space shortage issues but I am working on that. I am using Github Actions to create CICD pipeline.
+This application scrapes comments of social media feeds, stores comments into s3 bucket, performs sentiment analysis and returns overall semtiment associated with a social media post. This application is essentially an API that will be deployed to an EC2 instance. I am using Github Actions to create CICD pipeline. The CICD pipeline is deployed succesfully. I have not kept it deployed as the resources cost me but if anyone wishes for a demo then feel free to contact me on email - `aditbhosle81@gmail.com`. I will switch on the EC2 instance and give you a demo.
 
 If you wish to run this application locally then you can do so easily. This is a flask application
 
